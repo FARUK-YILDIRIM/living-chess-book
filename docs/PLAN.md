@@ -36,7 +36,7 @@ Each task is one commit or more, with tests first where the logic is pure.
 | 30 | Choosing AI reading when a book is added, an estimate of time, importing an analysis or a notebook from a file ([ADR-0019](adr/0019-sharing-analyses-and-choosing-ai-at-start.md)) | Done, tried in a browser on the sample book, with nothing sent |
 | 31 | Name the project Living Chess Book, keeping the names that hold saved data ([ADR-0020](adr/0020-living-chess-book-name.md)) | Done, tested, and seen in a browser |
 | 32 | A Chrome and Edge extension that opens the app in a tab, with only unlimited storage, both engines, and no ChatGPT plan ([ADR-0021](adr/0021-browser-extension.md)) | Built, and loaded into Chrome 157 and Edge 157 without a window, with throwaway profiles |
-| 33 | Ready for the Chrome Web Store: a link to the source in Settings, the notices of every bundled package in the package, a privacy policy, the store listing, screenshots of the sample book and a promo tile ([ADR-0021](adr/0021-browser-extension.md)) | Done, built, and the screenshots taken from the extension in Chrome 157 |
+| 33 | Ready for the Chrome Web Store: a link to the source in Settings, the notices of every bundled package in the package, a privacy policy, the store listing, screenshots of the sample book and a promo tile ([ADR-0021](adr/0021-browser-extension.md)) | Done, and sent to the Chrome Web Store for review on 2026-11-08 |
 
 ## Open items
 
@@ -65,8 +65,9 @@ Each task is one commit or more, with tests first where the logic is pure.
 - Reduce the AI reading tab to one suggestion, with Settings only when needed.
 - Keep focus in step with the menu and confirmation bars in all paths, and test with a screen reader.
 - Move accuracy on scanned books without AI. See [spike-results.md](spike-results.md).
-- Try each AI provider from the extension, and click its toolbar button in a real window. Then send
-  it to the Chrome Web Store with [docs/store/chrome-web-store.md](store/chrome-web-store.md), and to Edge.
+- Try each AI provider from the extension, and click its toolbar button in a real window. Publish it
+  once the Chrome Web Store has reviewed it, then send it to Edge with the same
+  [listing](store/chrome-web-store.md).
 - Firefox and Safari versions of the extension.
 - Compile and try the Tauri shell on macOS, Windows and Linux, now on hold.
 - Export uses a browser download, which is expected to fail inside the Tauri window. It

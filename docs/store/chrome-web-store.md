@@ -16,11 +16,10 @@ does can be taken down.
 
 > Study a chess book PDF you own on one screen: clickable moves, a live board, notes, an engine and an optional AI coach.
 
-**Description:**
+**Description:** paste as it is. The store keeps every line break, so each paragraph and bullet is one line.
 
 ```text
-Living Chess Book turns a chess book PDF you own into a study workspace. The book's own pages stay
-as they are, and its moves and diagrams become clickable.
+Living Chess Book turns a chess book PDF you own into a study workspace. The book's own pages stay as they are, and its moves and diagrams become clickable.
 
 • Click a move or a diagram to see it on a live board, and step through lines with the arrow keys.
 • Try your own moves, and see what the Stockfish engine thinks of them.
@@ -30,14 +29,10 @@ as they are, and its moves and diagrams become clickable.
 • Ask an AI coach about a position, if you connect a provider of your choice.
 
 Private by design
-Everything runs on your computer: the book, your notes and the engine. Nothing is sent anywhere
-unless you set up an AI provider and agree first, and then only to the provider you chose, with
-your own API key. There are no accounts, no analytics and no ads. The extension asks for no
-access to the websites you visit.
+Everything runs on your computer: the book, your notes and the engine. Nothing is sent anywhere unless you set up an AI provider and agree first, and then only to the provider you chose, with your own API key. There are no accounts, no analytics and no ads. The extension asks for no access to the websites you visit.
 
 Good to know
-• It works best with digital PDFs whose text can be selected. A scanned book needs a text layer,
-  and is read less reliably.
+• It works best with digital PDFs whose text can be selected. A scanned book needs a text layer, and is read less reliably.
 • It lists what it was unsure of, so that you can check and correct it.
 • Use it only with books you own.
 
@@ -53,9 +48,11 @@ https://github.com/FARUK-YILDIRIM/living-chess-book
 
 | Asset | Size | File |
 |---|---|---|
-| Icon | 128 × 128 | made by the build, `dist-extension/icons/icon-128.png` |
+| Store icon | 128 × 128, artwork 96 × 96 | `docs/store/icon-128.png` |
 | Screenshots | 1280 × 800 | `docs/store/screenshot-*.png` |
 | Small promo tile | 440 × 280 | `docs/store/promo-small.png` |
+
+`node scripts/make-store-tile.mjs` draws the icon and the tile.
 
 The screenshots show only the generated sample book. No real book may appear in them (ADR-0008).
 

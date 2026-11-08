@@ -1,4 +1,4 @@
-// Draws the Chrome Web Store's small promo tile, 440 × 280, from the app's icon.
+// Draws the Chrome Web Store's small promo tile, 440 × 280, and its store icon, from the app's icon.
 // Run with: node scripts/make-store-tile.mjs
 import { createCanvas, loadImage } from '@napi-rs/canvas';
 import fs from 'node:fs';
@@ -30,4 +30,9 @@ g.fillText('Study the chess books you own,', 172, 182);
 g.fillText('with a live board and an engine.', 172, 204);
 
 fs.writeFileSync('docs/store/promo-small.png', canvas.toBuffer('image/png'));
-console.log('Wrote docs/store/promo-small.png');
+
+// The store asks for 128 × 128, with the artwork in the middle 96 × 96 and the rest transparent.
+const storeIcon = createCanvas(128, 128);
+storeIcon.getContext('2d').drawImage(icon, 16, 16, 96, 96);
+fs.writeFileSync('docs/store/icon-128.png', storeIcon.toBuffer('image/png'));
+console.log('Wrote docs/store/promo-small.png and docs/store/icon-128.png');
