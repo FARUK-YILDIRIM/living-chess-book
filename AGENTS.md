@@ -93,6 +93,7 @@ changes need none. Records are history: one that no longer holds is marked `supe
 | `extension` | The extension's own files, such as the script that opens the app in a tab |
 | `docs` | SPEC, PLAN, ADRs and measured results |
 | `docs/store` | The Chrome Web Store listing, its screenshots and promo tile |
+| `docs/images` | Images for the README, taken from the sample book only |
 | `docs/why` | Why Trail records, for decisions inside the code ([.why.json](.why.json)) |
 
 ## Writing for the app
