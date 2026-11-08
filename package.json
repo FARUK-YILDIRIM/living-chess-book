@@ -1,6 +1,6 @@
 {
   "name": "living-chess-book",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "private": true,
   "description": "Turn a chess book PDF you own into an interactive book. Runs locally.",
   "license": "GPL-3.0-or-later",

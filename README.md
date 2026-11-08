@@ -134,6 +134,10 @@ npm run eval:local -- /path/to/book.pdf /path/to/truth.json
 It prints aggregate numbers only. `npm run eval:llm` does the same for AI reading, without
 calling any API. See the top of [scripts/eval-llm.ts](scripts/eval-llm.ts).
 
+## Privacy
+
+The app collects nothing, and has no servers of its own. See [PRIVACY.md](PRIVACY.md).
+
 ## License
 
 GPL-3.0-or-later. See [LICENSE](LICENSE).

@@ -105,8 +105,8 @@ const TURKISH = {
   'This cannot be played from this position. It may be meant for later in a plan.': 'Bu hamle bu pozisyondan oynanamaz. Planın ilerisi için düşünülmüş olabilir.',
   'The coach could not answer.': 'Koç yanıt veremedi.',
   'The coach needs a connection to an AI provider.': 'Koç için bir yapay zekâ sağlayıcısına bağlantı gerekiyor.',
-  "Your questions, this position, the book's line, the engine lines, your notes on this position and any text you selected go to {destination}. Their terms apply. This holds until you close the app or choose another provider.":
-    'Sorularınız, bu pozisyon, kitabın hamleleri, motor varyantları, bu pozisyondaki notlarınız ve seçtiğiniz metin {destination} adresine gider. Onların koşulları geçerlidir. Bu izin, uygulamayı kapatana ya da sağlayıcı değiştirene kadar sürer.',
+  "Your questions, the page number, this position, the book's line, the engine lines, your notes on this position, your last few exchanges with the coach and any text you selected go to {destination}. Their terms apply. This holds until you close the app or choose another provider.":
+    'Sorularınız, sayfa numarası, bu pozisyon, kitabın hamleleri, motor varyantları, bu pozisyondaki notlarınız, koçla son birkaç yazışmanız ve seçtiğiniz metin {destination} adresine gider. Onların koşulları geçerlidir. Bu izin, uygulamayı kapatana ya da sağlayıcı değiştirene kadar sürer.',
   'I agree': 'Kabul ediyorum',
   'Open the coach': 'Koçu aç',
   'Close the coach': 'Koçu kapat',
@@ -424,6 +424,9 @@ const TURKISH = {
     'Hazır. Neyin gönderileceğini yine her seferinde kitabın Yapay zekâ sekmesinde onaylarsınız.',
   'Forget all keys': 'Tüm anahtarları unut',
   Done: 'Tamam',
+  'Living Chess Book {version} is free software under the GPL-3.0-or-later licence.':
+    'Living Chess Book {version}, GPL-3.0-or-later lisanslı özgür bir yazılımdır.',
+  'Source code': 'Kaynak kodu',
 
   // ChatGPT plan
   'Use your ChatGPT plan': 'ChatGPT planınızı kullanın',

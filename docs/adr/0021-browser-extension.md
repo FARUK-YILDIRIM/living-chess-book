@@ -47,5 +47,20 @@ moved folders, which showed that storage a site can lose is a real risk for a re
 - An unpacked extension's id comes from its folder, so loading it from another folder gives it new,
   empty storage. A store install keeps one id.
 - `minimum_chrome_version` is 116, and no Chrome that old has been tried.
-- The extension was tried by serving its pages with the same security policy. Loading it into Chrome
-  itself is left to the owner, since the app's own browser cannot load extensions.
+- The extension was tried by serving its pages with the same security policy, and later loaded into
+  Chrome 157 and Edge 157 without a window.
+
+## Later (2026-11-08)
+
+Ready for the Chrome Web Store, as version 0.1.1:
+
+- **Where the source is.** Settings ends with the version, the licence and a link to the GitHub
+  repository, as the GPL asks of every copy.
+- **Notices.** The build lists every package that goes into the bundle, as it builds it, and writes
+  their licences into `THIRD_PARTY_NOTICES.txt` in the package, with pdf.js and Stockfish, which are
+  copied rather than bundled, and Vite and Rolldown, which add code of their own. A package
+  published without a licence file needs its text kept in `scripts/licences`, or the build stops.
+- **Privacy policy** in [PRIVACY.md](../../PRIVACY.md): nothing is collected, and what goes to an AI
+  provider goes only when the reader asks, straight to the provider they chose.
+- **The listing**, with its answers on privacy, is in [docs/store](../store/chrome-web-store.md). Its
+  screenshots show only the sample book.

@@ -224,7 +224,7 @@ export function CoachDock({ coach, notebook, anchor, isOpen, isGuessing, onOpenC
           !coach.hasConsent && (
             <div className="coach-setup">
               <p>
-                {t("Your questions, this position, the book's line, the engine lines, your notes on this position and any text you selected go to {destination}. Their terms apply. This holds until you close the app or choose another provider.", {
+                {t("Your questions, the page number, this position, the book's line, the engine lines, your notes on this position, your last few exchanges with the coach and any text you selected go to {destination}. Their terms apply. This holds until you close the app or choose another provider.", {
                   destination: tm(coach.destination),
                 })}
               </p>

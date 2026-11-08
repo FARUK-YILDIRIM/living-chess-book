@@ -235,7 +235,9 @@ button:disabled {
   gap: 8px;
   padding: 12px;
   min-height: 0;
-  /* The board keeps its size, and a column with many tools in it scrolls instead. */
+  /* The board keeps its size, and a column with many tools in it scrolls instead. Chessground's
+     row of file letters is a few pixels wider than the board, and must not add a sideways bar. */
+  overflow-x: hidden;
   overflow-y: auto;
   border-left: 1px solid var(--line);
   background: var(--surface);
@@ -878,6 +880,18 @@ button:disabled {
   display: flex;
   justify-content: space-between;
   gap: 8px;
+}
+
+.settings .about {
+  margin: 0;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.settings .about a {
+  color: var(--accent);
 }
 
 /* ChatGPT plan */

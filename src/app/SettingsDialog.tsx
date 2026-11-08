@@ -5,7 +5,8 @@ import { ChatGptSection } from './ChatGptSection';
 import { LANGUAGES, type Language } from './i18n';
 import { useI18n } from './I18nContext';
 import type { AiSettingsControl } from './useAiSettings';
-import { IS_EXTENSION } from './platform';
+import { version as APP_VERSION } from '../../package.json';
+import { IS_EXTENSION, SOURCE_URL } from './platform';
 
 export function SettingsDialog({ ai, onClose }: { ai: AiSettingsControl; onClose: () => void }) {
   const { language, setLanguage, t, tm } = useI18n();
@@ -142,6 +143,13 @@ export function SettingsDialog({ ai, onClose }: { ai: AiSettingsControl; onClose
           )}
           <button type="submit">{t('Done')}</button>
         </div>
+
+        <p className="about">
+          {t('Living Chess Book {version} is free software under the GPL-3.0-or-later licence.', { version: APP_VERSION })}{' '}
+          <a href={SOURCE_URL} target="_blank" rel="noreferrer">
+            {t('Source code')}
+          </a>
+        </p>
       </form>
     </dialog>
   );
