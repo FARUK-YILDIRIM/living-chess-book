@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "living-chess-book",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "dev"],
+      "port": 5183
+    },
+    {
+      "name": "extension-pages",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "preview:extension"],
+      "port": 5184
+    }
+  ]
+}

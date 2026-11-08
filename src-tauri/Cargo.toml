@@ -1,0 +1,12 @@
+[package]
+name = "living-chess-book"
+version = "0.1.0"
+description = "Turn a chess book PDF you own into an interactive book."
+license = "GPL-3.0-or-later"
+edition = "2021"
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+
+[dependencies]
+tauri = { version = "2", features = [] }

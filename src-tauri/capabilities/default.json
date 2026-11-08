@@ -1,0 +1,7 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "The app needs no system access beyond its own window.",
+  "windows": ["main"],
+  "permissions": ["core:default"]
+}

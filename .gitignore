@@ -1,0 +1,14 @@
+node_modules/
+dist/
+dist-extension/
+release/
+corpus/
+reports/
+src-tauri/target/
+*.pdf
+.DS_Store
+scripts/.tmp-*
+!public/sample-book.pdf
+src-tauri/gen/
+public/pdfjs/
+public/engine/

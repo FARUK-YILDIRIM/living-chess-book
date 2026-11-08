@@ -1,0 +1,55 @@
+{
+  "name": "living-chess-book",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Turn a chess book PDF you own into an interactive book. Runs locally.",
+  "license": "GPL-3.0-or-later",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FARUK-YILDIRIM/living-chess-book.git"
+  },
+  "homepage": "https://github.com/FARUK-YILDIRIM/living-chess-book#readme",
+  "bugs": {
+    "url": "https://github.com/FARUK-YILDIRIM/living-chess-book/issues"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit",
+    "eval:local": "tsx scripts/eval-local.ts",
+    "eval:llm": "tsx scripts/eval-llm.ts",
+    "tauri": "tauri",
+    "predev": "node scripts/copy-pdf-assets.mjs",
+    "prebuild": "node scripts/copy-pdf-assets.mjs",
+    "build:extension": "tsc --noEmit && node scripts/build-extension.mjs",
+    "preview:extension": "node scripts/serve-extension.mjs"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.5.0",
+    "chess.js": "^1.4.0",
+    "chessground": "^9.2.1",
+    "jose": "^6.2.15",
+    "pdfjs-dist": "^6.5.438",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "stockfish": "19.0.1"
+  },
+  "devDependencies": {
+    "@napi-rs/canvas": "^1.1.0",
+    "@tauri-apps/cli": "^2.12.4",
+    "@types/node": "^26.6.6",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@vitejs/plugin-react": "^6.2.1",
+    "fake-indexeddb": "^6.2.7",
+    "pdf-lib": "^1.17.1",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.5",
+    "vitest": "^5.1.0"
+  }
+}
