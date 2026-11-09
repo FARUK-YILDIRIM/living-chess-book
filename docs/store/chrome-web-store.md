@@ -1,8 +1,8 @@
 # Chrome Web Store listing
 
-What goes into the Chrome Web Store's Developer Dashboard for Living Chess Book. The Edge Add-ons
-listing uses the same text. Keep this in step with the app: a listing that claims more than the app
-does can be taken down.
+What goes into the Chrome Web Store's Developer Dashboard for Living Chess Book, published at
+<https://chromewebstore.google.com/detail/living-chess-book/mlojkmfoodhbonbnnilidimdnddminkf>.
+Keep this in step with the app: a listing that claims more than the app does can be taken down.
 
 ## Package
 

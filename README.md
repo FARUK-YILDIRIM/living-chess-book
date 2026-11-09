@@ -5,8 +5,7 @@ on a live board, check lines with an engine, keep notes beside the page, and ask
 runs on your computer.
 
 [![Licence: GPL-3.0-or-later](https://img.shields.io/badge/licence-GPL--3.0--or--later-blue)](LICENSE)
-[![Version 0.1.1](https://img.shields.io/badge/version-0.1.1-green)](https://github.com/FARUK-YILDIRIM/living-chess-book/releases)
-[![Chrome and Edge](https://img.shields.io/badge/Chrome%20%26%20Edge-extension-4285F4)](#install)
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/mlojkmfoodhbonbnnilidimdnddminkf?label=Chrome%20Web%20Store&color=4285F4)](https://chromewebstore.google.com/detail/living-chess-book/mlojkmfoodhbonbnnilidimdnddminkf)
 
 ![Clicking the moves on a book's page plays them on the board, and the engine shows its lines](docs/images/demo.gif)
 
@@ -36,9 +35,13 @@ The book's own pages stay as they are. Its moves and diagrams become clickable, 
 
 ## Install
 
-**Chrome Web Store:** under review. A link will be here when it is published.
+**Add it from the Chrome Web Store:**
+[Living Chess Book](https://chromewebstore.google.com/detail/living-chess-book/mlojkmfoodhbonbnnilidimdnddminkf)
 
-**Until then**, or to try the latest version:
+Then click its button in the toolbar, and try the sample book or open a PDF of your own. In Edge, the
+store page first asks you to allow extensions from other stores.
+
+**Without the store**, for example to try a version that is not there yet:
 
 1. Download `living-chess-book-<version>.zip` from the
    [Releases](https://github.com/FARUK-YILDIRIM/living-chess-book/releases) page, and unzip it.

@@ -64,3 +64,10 @@ Ready for the Chrome Web Store, as version 0.1.1:
   provider goes only when the reader asks, straight to the provider they chose.
 - **The listing**, with its answers on privacy, is in [docs/store](../store/chrome-web-store.md). Its
   screenshots show only the sample book.
+
+## Later (2026-11-09)
+
+Published in the [Chrome Web Store](https://chromewebstore.google.com/detail/living-chess-book/mlojkmfoodhbonbnnilidimdnddminkf) as version 0.1.1.
+The owner chose not to register for Edge Add-ons, whose sign-up asks for a puzzle to prove a person
+is there. Edge can install extensions from the Chrome Web Store once the reader allows it, so Edge
+readers are served from there. Installing it that way in Edge has not been tried yet.
