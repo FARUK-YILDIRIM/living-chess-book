@@ -37,6 +37,7 @@ Each task is one commit or more, with tests first where the logic is pure.
 | 31 | Name the project Living Chess Book, keeping the names that hold saved data ([ADR-0020](adr/0020-living-chess-book-name.md)) | Done, tested, and seen in a browser |
 | 32 | A Chrome and Edge extension that opens the app in a tab, with only unlimited storage, both engines, and no ChatGPT plan ([ADR-0021](adr/0021-browser-extension.md)) | Built, and loaded into Chrome 157 and Edge 157 without a window, with throwaway profiles |
 | 33 | Ready for the Chrome Web Store: a link to the source in Settings, the notices of every bundled package in the package, a privacy policy, the store listing, screenshots of the sample book and a promo tile ([ADR-0021](adr/0021-browser-extension.md)) | Done, sent for review on 2026-11-08, and published in the Chrome Web Store on 2026-11-09 |
+| 34 | Fix any diagram from the board, not only those in the Check list ([ADR-0004](adr/0004-deterministic-first.md)) | Tested, and tried in a browser on the sample book |
 
 ## Open items
 
@@ -78,3 +79,5 @@ Each task is one commit or more, with tests first where the logic is pure.
   analyzed again.
 - Promotions other than to a queen cannot be read from a book or played on the board. So a book's underpromotion cannot be guessed.
 - Analysis takes minutes, and should be faster.
+- A diagram with no caption such as "Black to move" and no moves read after it is given White to
+  move. It can be corrected, but the app does not say it guessed.

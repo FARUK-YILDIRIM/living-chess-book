@@ -1882,6 +1882,21 @@ button:disabled {
 
 
 
+/* Any diagram can be corrected from the board, since a confident misreading is never in the Check list */
+.fix-diagram {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.fix-diagram-icon {
+  flex: none;
+  width: 15px;
+  height: 15px;
+}
+
 /* The doubtful move, asked about where the reader meets it */
 .doubt-bar {
   display: flex;

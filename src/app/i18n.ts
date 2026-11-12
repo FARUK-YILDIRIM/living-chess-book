@@ -189,6 +189,9 @@ const TURKISH = {
   'Not known yet': 'Henüz bilinmiyor',
   'Next step': 'Sıradaki adım',
   'The diagram on page {page}': '{page}. sayfadaki diyagram',
+  'Fix this diagram': 'Bu diyagramı düzelt',
+  'Correct the pieces or the side to move, if the board does not match the page':
+    'Tahta sayfadakiyle aynı değilse taşları ya da sıranın kimde olduğunu düzeltin',
   'This diagram is not solved yet. Find the moves the book plays from it.': 'Bu diyagram henüz çözülmedi. Kitabın buradan oynadığı hamleleri bulun.',
   'Show it': 'Göster',
   'You have solved every diagram in this book.': 'Bu kitaptaki bütün diyagramları çözdünüz.',

@@ -3,6 +3,7 @@ import {
   correctDiagram,
   correctMove,
   diagramFen,
+  diagramSide,
   dismissReview,
   findBookLine,
   legalAlternatives,
@@ -145,6 +146,26 @@ describe('correctDiagram', () => {
     o.moves = [move('a', null, 'e4', '4k3/8/8/8/4P3/8/8/4K3 b - - 0 1', { diagramId: 'd' })];
     const fixed = correctDiagram(o, 'd', '3k4/8/8/8/8/8/4P3/4K3', 'w');
     expect(fixed.moves[0]!.fen.startsWith('3k4/8/8/8/4P3/8/8/4K3')).toBe(true);
+  });
+
+  // The editor starts from the side the board shows, so a save with no change to it keeps the line.
+  it('keeps the line of a diagram with no caption when saved with the side its board shows', () => {
+    const o = overlay();
+    o.diagrams = [{ ...diagram, placement: '4k3/8/8/8/8/8/4P3/4K3', sideToMove: null, issues: [] }];
+    o.moves = [move('a', null, 'Kd7', '8/3k4/8/8/8/8/4P3/4K3 w - - 1 2', { diagramId: 'd' })];
+    expect(diagramSide(o, 'd')).toBe('b');
+    const fixed = correctDiagram(o, 'd', '4k3/8/8/8/8/8/4P3/4K3', diagramSide(o, 'd'));
+    expect(fixed.moves.map((m) => m.san)).toEqual(['Kd7']);
+    expect(fixed.review.filter((r) => r.reason === 'unresolved-move')).toEqual([]);
+  });
+
+  it('asks about a line that no longer fits once the side to move is corrected', () => {
+    const o = overlay();
+    o.diagrams = [{ ...diagram, placement: '4k3/8/8/8/8/8/4P3/4K3', issues: [], confidence: 0.98 }];
+    o.moves = [move('a', null, 'e4', '4k3/8/8/8/4P3/8/8/4K3 b - - 0 1', { diagramId: 'd' })];
+    const fixed = correctDiagram(o, 'd', '4k3/8/8/8/8/8/4P3/4K3', 'b');
+    expect(fixed.moves).toEqual([]);
+    expect(fixed.review.filter((r) => r.reason === 'unresolved-move')).toHaveLength(1);
   });
 });
 

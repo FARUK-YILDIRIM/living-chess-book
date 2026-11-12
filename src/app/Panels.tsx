@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { moveLabel } from '../core/notebook';
-import { firstReviewFrom, legalAlternatives, moveNumber, reviewInOrder } from '../core/overlay';
+import { diagramSide, firstReviewFrom, legalAlternatives, moveNumber, reviewInOrder } from '../core/overlay';
 import type { BookOverlay, Color, MoveNode, ReviewItem } from '../core/types';
 import type { Calibration, PieceCluster } from '../vision/classifySquares';
 import { checkPlacement, labelsFromPlacement, placementFromLabels } from '../vision/placement';
@@ -181,6 +181,33 @@ export function ReviewPanel({ overlay, startPage, onGoTo, onDismiss, onCorrectMo
   );
 }
 
+/** Any diagram, opened from the board: one read wrongly but with confidence never reaches the list above. */
+export function DiagramEditPanel(props: {
+  overlay: BookOverlay;
+  diagramId: string;
+  onCorrect: (id: string, placement: string, side: Color) => void;
+  onCancel: () => void;
+}) {
+  const { overlay, diagramId, onCorrect, onCancel } = props;
+  const { t } = useI18n();
+  const diagram = overlay.diagrams.find((d) => d.id === diagramId);
+  if (!diagram) return null;
+  return (
+    <div className="review-flow">
+      <div className="review-card">
+        <strong>{t('The diagram on page {page}', { page: diagram.page + 1 })}</strong>
+        <p className="hint">{t('Make this board match the diagram on the page: choose a piece, then click a square.')}</p>
+        <DiagramFix key={diagramId} overlay={overlay} diagramId={diagramId} onCorrect={onCorrect} />
+        <div className="review-actions">
+          <button type="button" className="quiet" onClick={onCancel}>
+            {t('Cancel')}
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function MoveFix(props: { overlay: BookOverlay; moveId: string; onCorrect: (id: string, san: string) => void }) {
   const { overlay, moveId, onCorrect } = props;
   const { t } = useI18n();
@@ -229,7 +256,8 @@ function DiagramFix(props: {
   const [labels, setLabels] = useState(() => labelsFromPlacement(diagram?.placement ?? ''));
   const [typed, setTyped] = useState<string | null>(null);
   const [brush, setBrush] = useState('P');
-  const [side, setSide] = useState<Color>(diagram?.sideToMove ?? 'w');
+  // The side the board shows, which for a diagram with no caption comes from its line. Saving keeps it.
+  const [side, setSide] = useState<Color>(() => diagramSide(overlay, diagramId));
   if (!diagram) return null;
 
   const placement = placementFromLabels(labels);
