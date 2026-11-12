@@ -23,3 +23,9 @@ no LLM at all.
 - P1 is free to run, private, and works offline.
 - This narrows the "fully AI" goal for P1. The owner should confirm this decision.
 - Hard pages depend on the review queue until the fallback exists.
+
+## Later (2026-11-12)
+
+The review queue holds only what the app doubts, so a diagram it misreads with confidence, such as
+White pieces read as Black or the wrong side to move, could not be corrected at all. A reader found
+this. Any diagram shown on the board can now be opened in the same editor with **Fix this diagram**.

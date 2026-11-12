@@ -68,13 +68,19 @@ function turnOfFirstMove(move: MoveNode): Color {
   return move.fen.split(' ')[1] === 'w' ? 'b' : 'w';
 }
 
+/** The side to move a diagram shows: as printed, or else taken from its line, or else White. */
+export function diagramSide(overlay: BookOverlay, diagramId: string): Color {
+  const diagram = overlay.diagrams.find((d) => d.id === diagramId);
+  if (diagram?.sideToMove) return diagram.sideToMove;
+  const firstMove = overlay.moves.find((m) => m.diagramId === diagramId && m.parentId === null);
+  return firstMove ? turnOfFirstMove(firstMove) : 'w';
+}
+
 /** The position a diagram shows, with the side to move taken from its line if not printed. */
 export function diagramFen(overlay: BookOverlay, diagramId: string): string | null {
   const diagram = overlay.diagrams.find((d) => d.id === diagramId);
   if (!diagram) return null;
-  const firstMove = overlay.moves.find((m) => m.diagramId === diagramId && m.parentId === null);
-  const side = diagram.sideToMove ?? (firstMove ? turnOfFirstMove(firstMove) : 'w');
-  return fenFromDiagram(diagram.placement, side);
+  return fenFromDiagram(diagram.placement, diagramSide(overlay, diagramId));
 }
 
 function fenBefore(overlay: BookOverlay, move: MoveNode): string {

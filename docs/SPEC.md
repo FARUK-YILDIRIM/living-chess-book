@@ -26,7 +26,8 @@ who love chess.
    shown, comes back later for practice.
 9. Ask the coach about the position or a selected passage, and click the moves in its answer.
 10. Practise saved positions when they come back.
-11. Review what the app was unsure about, and correct it.
+11. Review what the app was unsure about, and correct it. Correct any diagram from the board too,
+    since one read wrongly but with confidence is never in the review queue.
 12. Reopen the book later with the analysis, corrections and notebook intact.
 
 ## In scope now

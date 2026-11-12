@@ -44,7 +44,7 @@ import { analysisFromFile, analysisToFile, notebookFromFile, notebookToFile, rea
 import type { DrawShape } from 'chessground/draw';
 import type { Key } from 'chessground/types';
 import { PageView } from './PageView';
-import { DoubtBar, MoveList, PiecesPanel, ReviewPanel } from './Panels';
+import { DiagramEditPanel, DoubtBar, MoveList, PiecesPanel, ReviewPanel } from './Panels';
 
 const INITIAL_FEN = 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
 
@@ -148,6 +148,8 @@ export function App() {
   const isFixing = tab !== 'moves';
   /** The place being checked. */
   const [reviewMark, setReviewMark] = useState<ReviewItem | null>(null);
+  /** A diagram the reader chose to correct from the board, shown instead of the Check list. */
+  const [editedDiagramId, setEditedDiagramId] = useState<string | null>(null);
   /** Fixing the reading walks through the book, and closing it goes back to where the reader was. */
   const placeBeforeFixing = useRef<{ page: number; board: BoardState } | null>(null);
   const [isFlipped, setIsFlipped] = useState(() => readSetting(BOARD_FLIPPED) === 'yes');
@@ -477,10 +479,12 @@ export function App() {
   const openFixing = () => {
     placeBeforeFixing.current = { page, board };
     setTab('review');
+    setEditedDiagramId(null);
   };
 
   const closeFixing = useCallback(() => {
     setTab('moves');
+    setEditedDiagramId(null);
     const before = placeBeforeFixing.current;
     placeBeforeFixing.current = null;
     if (!before) return;
@@ -491,9 +495,46 @@ export function App() {
   /** Leaves fixing where it is, for something the reader wants to do with what is on screen. */
   const showNotebook = useCallback(() => {
     setTab('moves');
+    setEditedDiagramId(null);
     placeBeforeFixing.current = null;
     setIsNotebookOpen(true);
   }, []);
+
+  /** Whether the diagram's editor was opened from the Check list, which it then goes back to. */
+  const isDiagramFromList = useRef(false);
+  const fixDiagram = (diagramId: string) => {
+    const diagram = overlay?.diagrams.find((d) => d.id === diagramId);
+    if (!diagram) return;
+    isDiagramFromList.current = tab === 'review';
+    if (!isFixing) placeBeforeFixing.current = { page, board };
+    setTab('review');
+    setEditedDiagramId(diagramId);
+    setPage(diagram.page);
+    setBoard({ moveId: null, diagramId, exploreFen: null });
+  };
+
+  /** After a save, or a move elsewhere: the reader stays where they are, to see the board it gives. */
+  const leaveDiagramEditor = useCallback(() => {
+    setEditedDiagramId(null);
+    if (isDiagramFromList.current) return;
+    setTab('moves');
+    placeBeforeFixing.current = null;
+  }, []);
+
+  const cancelDiagramEditor = () => {
+    if (isDiagramFromList.current) setEditedDiagramId(null);
+    else closeFixing();
+  };
+
+  // Closing the column, practising or closing the book all leave the Check tab, and the editor with it.
+  useEffect(() => {
+    if (tab !== 'review') setEditedDiagramId(null);
+  }, [tab]);
+
+  // A click on another diagram or move takes the board away from the one being corrected.
+  useEffect(() => {
+    if (editedDiagramId && board.diagramId !== editedDiagramId) leaveDiagramEditor();
+  }, [board.diagramId, editedDiagramId, leaveDiagramEditor]);
 
   // The reader chose AI reading as they added the book: it opens once the first reading is done.
   const aiChoiceId = aiChoice?.id;
@@ -895,7 +936,8 @@ export function App() {
     setShouldStartGuessing(false);
     startGuessing();
   }, [shouldStartGuessing, startGuessing]);
-  const isDiagramSolvable = Boolean(!guess.isOn && !review.isOn && !board.moveId && !board.exploreFen && currentDiagram && solvable.some((d) => d.id === currentDiagram.id));
+  // Not while the diagram is being corrected, since a save replays the lines being guessed.
+  const isDiagramSolvable = Boolean(!editedDiagramId && !guess.isOn && !review.isOn && !board.moveId && !board.exploreFen && currentDiagram && solvable.some((d) => d.id === currentDiagram.id));
 
   // The diagram on the board comes first while it is still to be solved. Otherwise the next one is.
   const isStepHere = Boolean(isDiagramSolvable && currentDiagram && !solvedKeys.has(diagramKey(currentDiagram)));
@@ -1314,7 +1356,7 @@ export function App() {
             solvedDiagramIds={solvedDiagramIds}
             solvableDiagramId={isDiagramSolvable ? board.diagramId : null}
             onSolve={guess.start}
-            markedBox={tab === 'review' && reviewMark?.page === page ? reviewMark.box : null}
+            markedBox={tab === 'review' && !editedDiagramId && reviewMark?.page === page ? reviewMark.box : null}
             zoom={ZOOMS[zoomStep] ?? 'fit'}
             onSelectionNote={onSelectionNote}
             onSelectionExplain={onSelectionExplain}
@@ -1406,6 +1448,19 @@ export function App() {
             )}
           </div>
 
+          {/* Only at the diagram itself, where the board can be compared with the page. */}
+          {overlay && board.diagramId && !board.moveId && !board.exploreFen && !guess.isOn && !review.isOn && editedDiagramId !== board.diagramId && (
+            <button
+              type="button"
+              className="quiet fix-diagram"
+              title={t('Correct the pieces or the side to move, if the board does not match the page')}
+              onClick={() => board.diagramId && fixDiagram(board.diagramId)}
+            >
+              <PencilIcon />
+              {t('Fix this diagram')}
+            </button>
+          )}
+
           {review.isOn && <ReviewBar review={review} />}
 
           {doubtfulMove && doubtItem && overlay && (
@@ -1488,13 +1543,34 @@ export function App() {
           </div>
           <div className="tabs" role="tablist">
             {(['review', 'pieces', 'ai'] as const).map((name) => (
-              <button key={name} type="button" role="tab" aria-selected={tab === name} className={tab === name ? 'active' : ''} onClick={() => setTab(name)}>
+              <button
+                key={name}
+                type="button"
+                role="tab"
+                aria-selected={tab === name}
+                className={tab === name ? 'active' : ''}
+                onClick={() => {
+                  setTab(name);
+                  setEditedDiagramId(null);
+                }}
+              >
                 {name === 'review' ? t('Check ({count})', { count: overlay?.review.length ?? 0 }) : name === 'pieces' ? t('Pieces') : t('Read with AI')}
               </button>
             ))}
           </div>
           <div className="fix-body">
-            {tab === 'review' && overlay && (
+            {tab === 'review' && overlay && editedDiagramId && (
+              <DiagramEditPanel
+                overlay={overlay}
+                diagramId={editedDiagramId}
+                onCorrect={(id, placement, side: Color) => {
+                  update(correctDiagram(overlay, id, placement, side));
+                  leaveDiagramEditor();
+                }}
+                onCancel={cancelDiagramEditor}
+              />
+            )}
+            {tab === 'review' && overlay && !editedDiagramId && (
               <ReviewPanel
                 overlay={overlay}
                 startPage={page}
@@ -1592,5 +1668,21 @@ function OpeningNote() {
     <div className="progress" role="status">
       <span>{t('Opening the book')}</span>
     </div>
+  );
+}
+
+/** A pencil, drawn like the coach's icon, for changing what the app read. */
+function PencilIcon() {
+  return (
+    <svg className="fix-diagram-icon" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M15.2 5.3l3.5 3.5M4.5 19.5l1-4.3L16.4 4.3a1.6 1.6 0 0 1 2.3 0l1 1a1.6 1.6 0 0 1 0 2.3L8.8 18.5z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }
