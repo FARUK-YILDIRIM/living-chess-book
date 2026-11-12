@@ -33,7 +33,7 @@ Everything runs on your computer: the book, your notes and the engine. Nothing i
 
 Good to know
 • It works best with digital PDFs whose text can be selected. A scanned book needs a text layer, and is read less reliably.
-• It lists what it was unsure of, so that you can check and correct it.
+• It lists what it was unsure of, so that you can check and correct it, and any diagram can be corrected from the board.
 • Use it only with books you own.
 
 Free and open source under GPL-3.0-or-later:

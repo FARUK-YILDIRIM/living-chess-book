@@ -38,6 +38,7 @@ Each task is one commit or more, with tests first where the logic is pure.
 | 32 | A Chrome and Edge extension that opens the app in a tab, with only unlimited storage, both engines, and no ChatGPT plan ([ADR-0021](adr/0021-browser-extension.md)) | Built, and loaded into Chrome 157 and Edge 157 without a window, with throwaway profiles |
 | 33 | Ready for the Chrome Web Store: a link to the source in Settings, the notices of every bundled package in the package, a privacy policy, the store listing, screenshots of the sample book and a promo tile ([ADR-0021](adr/0021-browser-extension.md)) | Done, sent for review on 2026-11-08, and published in the Chrome Web Store on 2026-11-09 |
 | 34 | Fix any diagram from the board, not only those in the Check list ([ADR-0004](adr/0004-deterministic-first.md)) | Tested, and tried in a browser on the sample book |
+| 35 | Version 0.1.2 for the Chrome Web Store, with row 34 ([ADR-0021](adr/0021-browser-extension.md)) | Built, and loaded into Chrome without a window: the button, the editor and the version in Settings. Sent to the Chrome Web Store for review on 2026-11-12 |
 
 ## Open items
 
@@ -61,11 +62,15 @@ Each task is one commit or more, with tests first where the logic is pure.
 - Text printed sideways on an upright page gets a wrong crop.
 - Try more digital books. Only one has been measured, and its page layouts shaped the reader.
 - Score moves in the browser as well as on the command line, since the two draw pages differently.
-- Ask about a doubtful diagram where the reader meets it too, with a correction that needs no FEN. Moves already work this way.
+- Ask about a doubtful diagram where the reader meets it too, as moves already are. Any diagram can be
+  corrected from the board, but the app does not point out a doubtful one there.
 - Keep analyzing when a reader leaves a book, instead of starting over.
 - Reduce the AI reading tab to one suggestion, with Settings only when needed.
 - Keep focus in step with the menu and confirmation bars in all paths, and test with a screen reader.
 - Move accuracy on scanned books without AI. See [spike-results.md](spike-results.md).
+- Paste the listing's description from [docs/store](store/chrome-web-store.md) into the Chrome Web
+  Store with the next submission. 0.1.2 went for review on 2026-11-12 with the older text, whose lines
+  break mid-sentence.
 - Try each AI provider from the extension, and click its toolbar button in a real window. Edge
   readers install it from the Chrome Web Store, which has not been tried in Edge yet; the owner chose
   not to list it in Edge Add-ons.
@@ -80,4 +85,5 @@ Each task is one commit or more, with tests first where the logic is pure.
 - Promotions other than to a queen cannot be read from a book or played on the board. So a book's underpromotion cannot be guessed.
 - Analysis takes minutes, and should be faster.
 - A diagram with no caption such as "Black to move" and no moves read after it is given White to
-  move. It can be corrected, but the app does not say it guessed.
+  move. It can be corrected, but the app does not say it guessed. Some books print a mark beside the
+  diagram instead, such as a triangle, which the app does not read.
