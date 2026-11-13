@@ -123,10 +123,14 @@ export function positionState(fen: string): PositionState {
   if (!otherKing || !findKing(chess, mover) || chess.isAttacked(otherKing, mover)) return 'impossible';
   const hasPawnOnEdge = chess.board().some((rank, row) => (row === 0 || row === 7) && rank.some((piece) => piece?.type === 'p'));
   if (hasPawnOnEdge) return 'impossible';
-  // Measured: Stockfish crashes on a ninth pawn, or on more than 16 pieces a side.
+  // Measured: Stockfish crashes on a ninth pawn, on more than 16 pieces a side, and on more pieces
+  // beyond the starting set than there are pawns gone to promote into them.
   for (const color of ['w', 'b'] as const) {
     const pieces = chess.board().flat().filter((piece) => piece?.color === color);
-    if (pieces.length > 16 || pieces.filter((piece) => piece?.type === 'p').length > 8) return 'impossible';
+    const howMany = (type: string) => pieces.filter((piece) => piece?.type === type).length;
+    const pawns = howMany('p');
+    const promoted = Math.max(0, howMany('q') - 1) + Math.max(0, howMany('r') - 2) + Math.max(0, howMany('b') - 2) + Math.max(0, howMany('n') - 2);
+    if (pieces.length > 16 || pawns > 8 || promoted > 8 - pawns) return 'impossible';
   }
   return chess.moves().length ? 'playable' : 'over';
 }
