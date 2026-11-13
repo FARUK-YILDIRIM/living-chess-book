@@ -112,6 +112,17 @@ describe('positionState', () => {
     expect(positionState('rnbqkbnr/pppppppp/7P/8/8/8/PPPPPPPP/RNBQKBNR w - - 0 1')).toBe('impossible');
   });
 
+  // A misread bishop in the sample book's first diagram gave White a third rook with all eight pawns.
+  it('refuses more promoted pieces than pawns gone, which also crashed the engine', () => {
+    expect(positionState('r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/5N2/PPPP1PPP/RNRQK2R w KQkq - 0 1')).toBe('impossible');
+    expect(positionState('rnbqkbnr/pppppppp/8/8/8/1N6/PPPPPPPP/RNBQKBNR w KQkq - 0 1')).toBe('impossible');
+    expect(positionState('rnbqkbnr/pppppppp/3q4/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')).toBe('impossible');
+  });
+
+  it('takes a promoted piece once a pawn is gone, as the engine does', () => {
+    expect(positionState('r1bqk2r/pppp1ppp/2n2n2/2b1p3/2B1P3/5N2/PPPP1PP1/RNRQK2R w KQkq - 0 1')).toBe('playable');
+  });
+
   it('takes a full board, and many queens', () => {
     expect(positionState('rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1')).toBe('playable');
     expect(positionState('k7/8/8/8/8/1QQQQ2Q/8/K7 w - - 0 1')).toBe('playable');
