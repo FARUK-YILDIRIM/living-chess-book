@@ -13,14 +13,15 @@ npm run dev       # the app at http://localhost:5183, with the local ChatGPT hel
 npm test          # all tests, with Vitest
 npm run typecheck # TypeScript, no output
 npm run build     # typecheck, then a production build in dist/
-npm run build:extension    # the Chrome and Edge extension in dist-extension/, and a zip in release/
+npm run build:extension    # the extension: dist-extension/ for Chrome and Edge, dist-extension-firefox/, and zips in release/
 npm run preview:extension  # those pages at http://localhost:5184, with the extension's security policy
 ```
 
 `npm run dev` and `npm run build` first copy pdf.js's assets and the Stockfish builds into `public/`,
 which git ignores.
 
-The browser extension is how the app is meant to reach readers ([ADR-0021](docs/adr/0021-browser-extension.md)). The
+The browser extension is how the app is meant to reach readers ([ADR-0021](docs/adr/0021-browser-extension.md),
+and [ADR-0022](docs/adr/0022-firefox-extension.md) for Firefox). The
 Tauri desktop shell in `src-tauri/` is on hold, has not been compiled yet, and needs Rust.
 
 ## How work is done
@@ -73,7 +74,8 @@ changes need none. Records are history: one that no longer holds is marked `supe
 - **Names that hold saved data never change** ([ADR-0020](docs/adr/0020-living-chess-book-name.md)):
   the browser database `chess-coach`, the `chess-coach.` setting keys, the notebook's channel
   `chess-coach.notebook`, the helper's folder `~/.config/chess-coach/`, and the desktop shell's
-  identifier `org.livingchessbook.app` once a build is released. Files of the kinds
+  identifier `org.livingchessbook.app` once a build is released, and the Firefox add-on's ID
+  `living-chess-book@livingchessbook.org`, under which Firefox keeps its storage. Files of the kinds
   `chess-coach-analysis` and `chess-coach-notebook` stay readable, and the overlay and notebook formats
   change only with a way to read what was saved before.
 - **GPL-3.0-or-later**, because of chessground and Stockfish. Check a new dependency's licence first.
@@ -92,7 +94,7 @@ changes need none. Records are history: one that no longer holds is marked `supe
 | `scripts` | Measuring scripts, asset copying, and building and serving the extension |
 | `extension` | The extension's own files, such as the script that opens the app in a tab |
 | `docs` | SPEC, PLAN, ADRs and measured results |
-| `docs/store` | The Chrome Web Store listing, its screenshots and promo tile |
+| `docs/store` | The Chrome Web Store and Firefox Add-ons listings, their screenshots and promo tile |
 | `docs/images` | Images for the README, taken from the sample book only |
 | `docs/why` | Why Trail records, for decisions inside the code ([.why.json](.why.json)) |
 

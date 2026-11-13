@@ -5,6 +5,7 @@ import { estimateJobs, estimateMinutes, PARALLEL_REQUESTS, priceOf } from '../ll
 import { createReader } from '../llm/providers';
 import { runRepairs, type RepairTally } from '../llm/runRepairs';
 import { CHATGPT_USAGE_URL } from '../llm/chatgptProtocol';
+import { askBrowserConsent, clearConsentProblem, dataFor, DECLINED, hasBrowserConsent, readWhileAllowed, WITHDRAWN } from './browserConsent';
 import { useI18n } from './I18nContext';
 import type { ResolvedProvider } from '../llm/settings';
 
@@ -89,8 +90,14 @@ export function AiPanel({ isVisible, analysisRun, overlay, getWords, renderJob, 
 
   const canRun = !isRunning && !isBusy && hasConsent && jobs.length > 0 && config !== null;
 
+  const browserData = dataFor('reading', provider.needsKey);
   const start = async () => {
     if (!config) return;
+    if (!(await hasBrowserConsent(browserData))) {
+      setConsentFor(null);
+      setProblem(WITHDRAWN);
+      return;
+    }
     const controller = beginRequest();
     run.current = controller;
     runConfig.current = configKey;
@@ -102,7 +109,11 @@ export function AiPanel({ isVisible, analysisRun, overlay, getWords, renderJob, 
       const final = await runRepairs({
         jobs,
         getOverlay: () => latest.current,
-        read: createReader(config),
+        read: readWhileAllowed(createReader(config), browserData, () => {
+          setConsentFor(null);
+          setProblem(WITHDRAWN);
+          controller.abort();
+        }),
         renderJob,
         signal: controller.signal,
         onProgress: (next, updated) => {
@@ -203,7 +214,15 @@ export function AiPanel({ isVisible, analysisRun, overlay, getWords, renderJob, 
 
       {jobs.length > 0 && (
         <label className="consent">
-          <input type="checkbox" checked={hasConsent} disabled={isRunning} onChange={(event) => setConsentFor(event.target.checked ? consentKey : null)} />
+          <input type="checkbox" checked={hasConsent} disabled={isRunning} onChange={(event) => {
+              if (!event.target.checked) return setConsentFor(null);
+              // Firefox's own prompt opens from this click, and nothing is ticked if it is declined.
+              void askBrowserConsent(browserData).then((isAllowed) => {
+                setConsentFor(isAllowed ? consentKey : null);
+                setProblem((current) => (isAllowed ? clearConsentProblem(current) : DECLINED));
+              });
+            }}
+          />
           <span>
             {t('Send images of these parts of the pages to {destination}. Their terms apply. Only do this with a book you may share this way.', { destination: tm(destination) })}
           </span>

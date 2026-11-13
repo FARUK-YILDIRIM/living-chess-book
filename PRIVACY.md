@@ -1,6 +1,6 @@
 # Privacy policy
 
-Living Chess Book, the browser extension for Chrome and Edge. Effective 8 November 2026.
+Living Chess Book, the browser extension for Chrome, Edge and Firefox. Effective 13 November 2026.
 
 Living Chess Book is free software that runs on your computer. It has no servers and no accounts
 of its own, and it collects nothing about you. The authors receive none of your data.
@@ -34,6 +34,9 @@ for each provider, until you close the app.
 - **The coach** sends your question, the page number, the position, the book's line, the engine's
   lines, your notes on that position, your last few exchanges with the coach and any text you
   selected on the page. The text of the whole page goes only if you tick a second box.
+
+In Firefox, Firefox also asks you in its own prompt, from the same click, and nothing is sent if you
+decline. You can take that back at any time in Firefox's add-ons page, and the app then asks again.
 
 This goes straight from your browser to the provider you chose, with your own API key. Nothing
 passes through the authors. What the provider does with it is set by that provider's own terms and
