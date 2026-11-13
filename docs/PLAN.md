@@ -39,6 +39,7 @@ Each task is one commit or more, with tests first where the logic is pure.
 | 33 | Ready for the Chrome Web Store: a link to the source in Settings, the notices of every bundled package in the package, a privacy policy, the store listing, screenshots of the sample book and a promo tile ([ADR-0021](adr/0021-browser-extension.md)) | Done, sent for review on 2026-11-08, and published in the Chrome Web Store on 2026-11-09 |
 | 34 | Fix any diagram from the board, not only those in the Check list ([ADR-0004](adr/0004-deterministic-first.md)) | Tested, and tried in a browser on the sample book |
 | 35 | Version 0.1.2 for the Chrome Web Store, with row 34 ([ADR-0021](adr/0021-browser-extension.md)) | Built, and loaded into Chrome without a window: the button, the editor and the version in Settings. Sent to the Chrome Web Store for review on 2026-11-12 |
+| 36 | A Firefox package with Firefox's data consent beside the app's own, for AI reading and the coach ([ADR-0022](adr/0022-firefox-extension.md)) | Tested. Loaded into Firefox 142 without a window: the sample book, the fix editor, and the coach's consent, granted from a real click and refused from a scripted one. Not tried: AI reading's box, a question sent, Firefox's own prompt seen by a person, the build on Linux |
 
 ## Open items
 
@@ -71,6 +72,8 @@ Each task is one commit or more, with tests first where the logic is pure.
 - Paste the listing's description from [docs/store](store/chrome-web-store.md) into the Chrome Web
   Store with the next submission. 0.1.2 went for review on 2026-11-12 with the older text, whose lines
   break mid-sentence.
+- Send the Firefox package to AMO with its [listing](store/firefox-add-ons.md), and add its link to
+  the README once it is listed.
 - Try each AI provider from the extension, and click its toolbar button in a real window. Edge
   readers install it from the Chrome Web Store, which has not been tried in Edge yet; the owner chose
   not to list it in Edge Add-ons.

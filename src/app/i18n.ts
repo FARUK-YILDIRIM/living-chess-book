@@ -393,6 +393,8 @@ const TURKISH = {
     'Sayfaların bu kısımlarının görüntüleri {destination} tarafına gönderilsin. Onların şartları geçerlidir. Bunu yalnızca bu şekilde paylaşabileceğiniz bir kitapla yapın.',
   'Read with AI': 'Yapay zekâyla oku',
   Stop: 'Durdur',
+  'Firefox did not allow this to be sent, so nothing was sent.': 'Firefox bunun gönderilmesine izin vermedi, bu yüzden hiçbir şey gönderilmedi.',
+  'Firefox no longer allows this to be sent. Agree again to send it.': 'Firefox artık bunun gönderilmesine izin vermiyor. Göndermek için yeniden onay verin.',
   'Your AI settings changed, so reading stopped. What was already read is kept.':
     'Yapay zekâ ayarlarınız değişti, okuma durdu. Okunan kısım korunuyor.',
   'AI reading stopped unexpectedly.': 'Yapay zekâ okuması beklenmedik şekilde durdu.',

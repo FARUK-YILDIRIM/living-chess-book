@@ -3,6 +3,7 @@ import { coachPrompt, coachSystem, movesNamedIn, type CoachBookMove } from '../c
 import { samePosition, type Anchor } from '../core/notebook';
 import { createReader } from '../llm/providers';
 import type { ResolvedProvider } from '../llm/settings';
+import { askBrowserConsent, clearConsentProblem, dataFor, DECLINED, hasBrowserConsent, WITHDRAWN } from './browserConsent';
 import type { Language } from './i18n';
 import type { EngineState } from './useEngine';
 import type { NotebookState, PendingSelection } from './useNotebook';
@@ -45,6 +46,7 @@ export function useCoach({ bookHash, provider, language, notebook, engine, getMo
   const request = useRef<AbortController | null>(null);
   const hasConsent = consentFor === provider.consentKey;
   const sendsPage = pageFor === provider.consentKey;
+  const browserData = dataFor('coach', provider.needsKey);
 
   const stop = useCallback(() => {
     request.current?.abort();
@@ -107,6 +109,13 @@ export function useCoach({ bookHash, provider, language, notebook, engine, getMo
           selectedText: shown?.text ?? null,
           question,
         });
+        // Checked last, after the engine's few seconds, so that a grant taken back meanwhile still counts.
+        if (!(await hasBrowserConsent(browserData))) {
+          setConsentFor(null);
+          setProblem(WITHDRAWN);
+          return false;
+        }
+        if (controller.signal.aborted) return false;
         setLastPrompt(prompt);
         const reply = await createReader(provider.config)({ system: coachSystem(language), prompt, images: [], freeText: true, signal: controller.signal });
         if (controller.signal.aborted) return false;
@@ -128,7 +137,7 @@ export function useCoach({ bookHash, provider, language, notebook, engine, getMo
         }
       }
     },
-    [engine, explainQuestion, getMoment, getPageText, hasConsent, language, notebook, provider, sendsPage],
+    [browserData, engine, explainQuestion, getMoment, getPageText, hasConsent, language, notebook, provider, sendsPage],
   );
 
   return {
@@ -136,8 +145,17 @@ export function useCoach({ bookHash, provider, language, notebook, engine, getMo
     setupProblem: provider.problem,
     hasConsent,
     needsSetup: !provider.config,
-    /** Nothing is sent by this. The reader asks when they are ready, as they may have moved on since. */
-    giveConsent: useCallback(() => setConsentFor(provider.consentKey), [provider.consentKey]),
+    /**
+     * Nothing is sent by this. The reader asks when they are ready, as they may have moved on since.
+     * Firefox's own prompt opens from the same click, and the app's consent waits for it.
+     */
+    giveConsent: () => {
+      const key = provider.consentKey;
+      void askBrowserConsent(browserData).then((isAllowed) => {
+        setConsentFor(isAllowed ? key : null);
+        setProblem((current) => (isAllowed ? clearConsentProblem(current) : DECLINED));
+      });
+    },
     sendsPage,
     setSendsPage: useCallback((sends: boolean) => setPageFor(sends ? provider.consentKey : null), [provider.consentKey]),
     asking,

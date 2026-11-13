@@ -1,5 +1,6 @@
-// Builds the browser extension into dist-extension/, and packs it for a store into release/.
-// Run with: npm run build:extension. See ADR-0021.
+// Builds the browser extension into dist-extension/ for Chrome and Edge, and dist-extension-firefox/
+// for Firefox, and packs each for its store into release/. Run with: npm run build:extension.
+// See ADR-0021 and ADR-0022.
 import { createCanvas, loadImage } from '@napi-rs/canvas';
 import { execFileSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -12,6 +13,7 @@ import { packageDirOf, thirdPartyNotices } from './thirdPartyNotices.mjs';
 // Paths are the repository's, wherever this is run from.
 process.chdir(path.dirname(path.dirname(fileURLToPath(import.meta.url))));
 const OUT = 'dist-extension';
+const OUT_FIREFOX = 'dist-extension-firefox';
 const RELEASE = 'release';
 const { version } = JSON.parse(fs.readFileSync('package.json', 'utf8'));
 const manifest = extensionManifest(version);
@@ -62,14 +64,24 @@ if (unexpected.length || books.length) {
   process.exit(1);
 }
 
+// Firefox gets the same files with its own manifest, so that what was checked above is what it ships.
+fs.rmSync(OUT_FIREFOX, { recursive: true, force: true });
+fs.cpSync(OUT, OUT_FIREFOX, { recursive: true, filter: (from) => path.basename(from) !== '.DS_Store' });
+fs.writeFileSync(path.join(OUT_FIREFOX, 'manifest.json'), `${JSON.stringify(extensionManifest(version, 'firefox'), null, 2)}\n`);
+
 // A store takes a zip with the manifest at its root.
 fs.mkdirSync(RELEASE, { recursive: true });
-const zip = path.resolve(RELEASE, `living-chess-book-${version}.zip`);
-fs.rmSync(zip, { force: true });
-try {
-  execFileSync('zip', ['-qr', '-X', zip, '.', '-x', '*.DS_Store'], { cwd: OUT });
-  console.log(`Built ${OUT}/ and ${path.relative('.', zip)}`);
-} catch (cause) {
-  if (cause?.code !== 'ENOENT') throw cause;
-  console.log(`Built ${OUT}/. No zip tool was found, so pack that folder by hand for a store.`);
+for (const [dir, name] of [
+  [OUT, `living-chess-book-${version}.zip`],
+  [OUT_FIREFOX, `living-chess-book-firefox-${version}.zip`],
+]) {
+  const zip = path.resolve(RELEASE, name);
+  fs.rmSync(zip, { force: true });
+  try {
+    execFileSync('zip', ['-qr', '-X', zip, '.', '-x', '*.DS_Store'], { cwd: dir });
+    console.log(`Built ${dir}/ and ${path.relative('.', zip)}`);
+  } catch (cause) {
+    if (cause?.code !== 'ENOENT') throw cause;
+    console.log(`Built ${dir}/. No zip tool was found, so pack that folder by hand for a store.`);
+  }
 }
