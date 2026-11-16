@@ -49,3 +49,8 @@ chose. The owner chose to keep both in Firefox, rather than leave them out of th
 - AMO's reviewers may ask for more about Stockfish and pdf.js, whose WebAssembly is copied from their
   npm packages.
 - Firefox for Android is not targeted.
+
+## Later (2026-11-16)
+
+Version 0.1.3 was accepted and listed on [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/living-chess-book/), with its data collection
+declared as above. The Chrome Web Store keeps 0.1.2 until the next version.

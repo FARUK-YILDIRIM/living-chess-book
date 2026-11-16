@@ -6,6 +6,7 @@ runs on your computer.
 
 [![Licence: GPL-3.0-or-later](https://img.shields.io/badge/licence-GPL--3.0--or--later-blue)](LICENSE)
 [![Chrome Web Store](https://img.shields.io/chrome-web-store/v/mlojkmfoodhbonbnnilidimdnddminkf?label=Chrome%20Web%20Store&color=4285F4)](https://chromewebstore.google.com/detail/living-chess-book/mlojkmfoodhbonbnnilidimdnddminkf)
+[![Firefox Add-ons](https://img.shields.io/amo/v/living-chess-book?label=Firefox%20Add-ons&color=FF7139)](https://addons.mozilla.org/firefox/addon/living-chess-book/)
 
 ![Clicking the moves on a book's page plays them on the board, and the engine shows its lines](docs/images/demo.gif)
 
@@ -35,13 +36,15 @@ The book's own pages stay as they are. Its moves and diagrams become clickable, 
 
 ## Install
 
-**Add it from the Chrome Web Store:**
-[Living Chess Book](https://chromewebstore.google.com/detail/living-chess-book/mlojkmfoodhbonbnnilidimdnddminkf)
+**Add it from your browser's store:**
 
-Then click its button in the toolbar, and try the sample book or open a PDF of your own. In Edge, the
-store page first asks you to allow extensions from other stores.
+- **Chrome and Edge:** [Chrome Web Store](https://chromewebstore.google.com/detail/living-chess-book/mlojkmfoodhbonbnnilidimdnddminkf).
+  In Edge, the store page first asks you to allow extensions from other stores.
+- **Firefox:** [Firefox Add-ons](https://addons.mozilla.org/firefox/addon/living-chess-book/), for Firefox 140 or later on a computer.
 
-**Without the store**, for example to try a version that is not there yet:
+Then click its button in the toolbar, and try the sample book or open a PDF of your own.
+
+**Without the store**, in Chrome or Edge, for example to try a version that is not there yet:
 
 1. Download `living-chess-book-<version>.zip` from the
    [Releases](https://github.com/FARUK-YILDIRIM/living-chess-book/releases) page, and unzip it.
@@ -161,8 +164,10 @@ Then open http://localhost:5183. `public/sample-book.pdf` is an original sample 
 npm run build:extension
 ```
 
-This builds `dist-extension/`, and `release/living-chess-book-<version>.zip` for a store. Load the
-folder as in [Install](#install). `npm run preview:extension` serves the same pages with the
+This builds `dist-extension/` for Chrome and Edge and `dist-extension-firefox/` for Firefox, and a zip
+of each in `release/` for a store. Load the first as in [Install](#install). In Firefox, choose
+**Load Temporary Add-on** in `about:debugging` and pick `dist-extension-firefox/manifest.json`. It
+stays until Firefox closes. See [ADR-0022](docs/adr/0022-firefox-extension.md). `npm run preview:extension` serves the same pages with the
 extension's security policy, to try them in any browser.
 
 ### Test

@@ -69,4 +69,4 @@ DATA
 Nothing is sent anywhere unless the reader sets up an AI provider in Settings, with their own API key. Then the app asks its own consent before AI reading or the coach sends anything, and Firefox's data collection prompt opens from the same click. A declined prompt leaves the app's consent ungiven. The grant is checked again before each request to the provider, so taking it back in Firefox stops a run.
 ```
 
-Review can take some days. Once listed, the add-on's page gives the link for the README.
+Review can take some days. The add-on is listed at <https://addons.mozilla.org/firefox/addon/living-chess-book/>.
